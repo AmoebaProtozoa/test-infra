@@ -67,9 +67,6 @@ func monitorDiskAndEvict(
 				err = c.Delete(c.PathToKey(entry.Path))
 				if err != nil {
 					logger.WithError(err).Errorf("Error deleting entry at path: %v", entry.Path)
-				} else {
-					promMetrics.FilesEvicted.Inc()
-					promMetrics.LastEvictedAccessAge.Set(time.Since(entry.LastAccess).Hours())
 				}
 				// get new disk usage
 				blocksFree, _, _, _, _, _, err = diskutil.GetDiskUsage(diskRoot)
